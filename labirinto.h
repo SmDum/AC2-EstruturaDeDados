@@ -17,7 +17,8 @@
 #define VISITADO   '.'
 #define CAMINHO    '*'
 
-typedef struct {
+typedef struct 
+{
     char celulas[MAX_LINHAS * MAX_COLUNAS];
     int  valores_tesouro[MAX_LINHAS * MAX_COLUNAS]; /* valor fixo de cada tesouro */
     int  linhas;

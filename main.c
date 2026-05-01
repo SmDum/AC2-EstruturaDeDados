@@ -26,7 +26,8 @@
 #define ARQUIVO_SOLUCAO "solucao.txt"
 
 
-int main(void) {
+int main(void) 
+{
     /* inicializa o gerador de numeros aleatorios com a hora atual */
     srand((unsigned int)time(NULL));
 
@@ -34,7 +35,8 @@ int main(void) {
     /* 1. Carrega o labirinto                                            */
     /* ---------------------------------------------------------------- */
     Labirinto lab;
-    if (!labirinto_carregar(&lab, ARQUIVO_MAPA)) {
+    if (!labirinto_carregar(&lab, ARQUIVO_MAPA)) 
+    {
         printf("[FATAL] Nao foi possivel carregar o labirinto. Encerrando.\n");
         return 1;
     }
@@ -68,7 +70,8 @@ int main(void) {
     /* ---------------------------------------------------------------- */
     printf("\n[BUSCA] Explorando todos os caminhos...\n\n");
 
-    busca_backtracking(
+    busca_backtracking
+    (
         &lab, &mochila, &caminho,
         lab.inicio_linha, lab.inicio_coluna,
         5,   /* delay_ms: 5ms entre cada passo da animacao */
@@ -81,7 +84,8 @@ int main(void) {
     printf("\n");
     printf("<------------------------------------------------------------------------------------------------\n");
 
-    if (melhor.encontrou) {
+    if (melhor.encontrou) 
+    {
         printf("        MISSAO CUMPRIDA! MELHOR CAMINHO ENCONTRADO!      \n");
         printf("------------------------------------------------------------------------------------------------>\n\n");
 
@@ -100,7 +104,9 @@ int main(void) {
         /* salva a solucao em arquivo */
         labirinto_salvar_solucao(&lab, ARQUIVO_SOLUCAO);
 
-    } else {
+    } 
+    else 
+    {
         printf("    SEM SAIDA ENCONTRADA!     \n");
         printf("<------------------------------------------------------------------------------------------------\n");
         printf("O labirinto nao possui caminho valido de P ate S.\n");

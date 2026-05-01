@@ -10,13 +10,15 @@
 #include "mochila.h"
 
 /* define a mochila como vazia */
-void mochila_inicializar(Mochila *m) {
+void mochila_inicializar(Mochila *m) 
+{
     m->inicio    = NULL;
     m->total     = 0;
     m->quantidade = 0;
 }
 
-int mochila_vazia(Mochila *m) {
+int mochila_vazia(Mochila *m) 
+{
     return m->inicio == NULL;
 }
 
@@ -29,10 +31,12 @@ int mochila_vazia(Mochila *m) {
  *
  * complexidade: O(n), onde n eh o numero de tesouros
  */
-void mochila_inserir(Mochila *m, int valor) {
+void mochila_inserir(Mochila *m, int valor) 
+{
     /* aloca memoria para o novo no */
     NoTesouro *novo = (NoTesouro *)malloc(sizeof(NoTesouro));
-    if (novo == NULL) {
+    if (novo == NULL) 
+    {
         printf("[ERRO] Falha ao alocar memoria para tesouro!\n");
         return;
     }
@@ -40,10 +44,12 @@ void mochila_inserir(Mochila *m, int valor) {
     novo->proximo  = NULL;
 
     /* caso 1: lista vazia OU novo valor eh menor que o primeiro */
-    if (m->inicio == NULL || valor < m->inicio->valor) {
+    if (m->inicio == NULL || valor < m->inicio->valor) 
+    {
         novo->proximo = m->inicio;
         m->inicio = novo;
-    } else {
+    } else 
+    {
         /* caso 2: percorre ate achar a posicao certa */
         NoTesouro *atual = m->inicio;
         while (atual->proximo != NULL && atual->proximo->valor <= valor) {
@@ -62,8 +68,10 @@ void mochila_inserir(Mochila *m, int valor) {
  * remove o primeiro no da lista (menor valor)
  * retorna o valor do tesouro perdido, ou -1 se vazia
  */
-int mochila_remover_primeiro(Mochila *m) {
-    if (mochila_vazia(m)) {
+int mochila_remover_primeiro(Mochila *m) 
+{
+    if (mochila_vazia(m)) 
+    {
         printf("[AVISO] Armadilha acionada, mas a mochila esta vazia! Nada foi perdido.\n");
         return -1;
     }
@@ -81,15 +89,18 @@ int mochila_remover_primeiro(Mochila *m) {
 }
 
 /* imprime todos os tesouros da mochila em ordem */
-void mochila_imprimir(Mochila *m) {
-    if (mochila_vazia(m)) {
+void mochila_imprimir(Mochila *m) 
+{
+    if (mochila_vazia(m)) 
+    {
         printf("  [ mochila vazia ]\n");
         return;
     }
 
     NoTesouro *atual = m->inicio;
     int i = 1;
-    while (atual != NULL) {
+    while (atual != NULL) 
+    {
         printf("  [%d] %d moedas\n", i++, atual->valor);
         atual = atual->proximo;
     }
@@ -97,9 +108,11 @@ void mochila_imprimir(Mochila *m) {
 }
 
 /* libera todos os nos da lista (evita memory leak) */
-void mochila_liberar(Mochila *m) {
+void mochila_liberar(Mochila *m) 
+{
     NoTesouro *atual = m->inicio;
-    while (atual != NULL) {
+    while (atual != NULL) 
+    {
         NoTesouro *prox = atual->proximo;
         free(atual);
         atual = prox;

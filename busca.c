@@ -126,7 +126,10 @@ void busca_backtracking(Labirinto *lab, Mochila *mochila, Pilha *caminho,
         int nl = linha + direcao_linha[d];
         int nc = coluna + direcao_coluna[d];
 
-        if (!pode_mover(lab, nl, nc)) continue;
+        if (!pode_mover(lab, nl, nc)) 
+        {
+            continue;
+        }
 
         char celula_destino = labirinto_get(lab, nl, nc);
         int valor_adicionado = -1;
@@ -164,7 +167,8 @@ void busca_backtracking(Labirinto *lab, Mochila *mochila, Pilha *caminho,
         {
             NoTesouro *ant  = NULL;
             NoTesouro *cur  = mochila->inicio;
-            while (cur != NULL) {
+            while (cur != NULL) 
+            {
                 if (cur->valor == valor_adicionado) 
                 {
                     if (ant == NULL) 
