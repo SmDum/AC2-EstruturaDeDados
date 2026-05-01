@@ -25,13 +25,6 @@
 #define ARQUIVO_MAPA    "mapa.txt"
 #define ARQUIVO_SOLUCAO "solucao.txt"
 
-/*
- * delay entre cada passo da visualizacao (em milissegundos)
- * 0 = sem pausa (recomendado para busca completa, muito mais rapido)
- * 50 = levemente animado
- * 100 = mais lento, facil de acompanhar (labirintos pequenos)
- */
-#define DELAY_MS 0
 
 int main(void) {
     /* inicializa o gerador de numeros aleatorios com a hora atual */
@@ -78,7 +71,7 @@ int main(void) {
     busca_backtracking(
         &lab, &mochila, &caminho,
         lab.inicio_linha, lab.inicio_coluna,
-        DELAY_MS,
+        5,   /* delay_ms: 5ms entre cada passo da animacao */
         &melhor
     );
 

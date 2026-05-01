@@ -26,46 +26,55 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
+#include <windows.h>
+
 #include "busca.h"
 #include "labirinto.h"
 #include "mochila.h"
 #include "pilha.h"
 
-void dormir(int ms) {
-    clock_t inicio = clock();
-    while ((clock() - inicio) < (ms * CLOCKS_PER_SEC / 1000));
-}
-
 static int direcao_linha[4]  = {-1,  1,  0,  0};
 static int direcao_coluna[4] = { 0,  0, -1,  1};
 
-static int pode_mover(Labirinto *lab, int linha, int col) {
-    if (linha < 0 || linha >= lab->linhas) return 0;
-    if (col   < 0 || col   >= lab->colunas) return 0;
-    char c = labirinto_get(lab, linha, col);
-    return (c == CORREDOR || c == TESOURO || c == ARMADILHA || c == SAIDA);
+static int pode_mover(Labirinto *lab, int linha, int col) 
+{
+    // detecta limites do mapa
+    if (linha < 0 || linha >= lab->linhas) // estou fora nas linhas 
+        return 0;
+    if (col < 0 || col >= lab->colunas) // estou fora nas colunas
+        return 0;
+    char c = labirinto_get(lab, linha, col); // pego o caractere da celula
+    // se for um dos caracteres permitidos, retorna 1
+    return (c == CORREDOR || c == TESOURO || c == ARMADILHA || c == SAIDA); 
 }
 
 /*
  * copia profunda da lista encadeada da mochila.
  * necessario para salvar um snapshot independente ao encontrar a saida.
  */
-static void mochila_copiar(Mochila *dest, Mochila *orig) {
+static void mochila_copiar(Mochila *dest, Mochila *orig) 
+{
     mochila_liberar(dest);
-    dest->total      = orig->total;
+    dest->total = orig->total;
     dest->quantidade = orig->quantidade;
-    dest->inicio     = NULL;
+    dest->inicio = NULL;
 
     NoTesouro **ptr = &dest->inicio;
     NoTesouro *atual = orig->inicio;
-    while (atual != NULL) {
-        NoTesouro *novo = (NoTesouro *)malloc(sizeof(NoTesouro));
-        if (!novo) { printf("[ERRO] Falha ao copiar mochila!\n"); return; }
-        novo->valor   = atual->valor;
+
+    while (atual != NULL) 
+    {
+        NoTesouro *novo = (NoTesouro*)malloc(sizeof(NoTesouro));
+        if (!novo) 
+        { 
+            printf("Erro ao copiar mochila!\n"); 
+            return; 
+        }
+        
+        novo->valor = atual->valor;
         novo->proximo = NULL;
-        *ptr  = novo;
-        ptr   = &novo->proximo;
+        *ptr = novo;
+        ptr = &novo->proximo;
         atual = atual->proximo;
     }
 }
@@ -101,9 +110,12 @@ void busca_backtracking(Labirinto *lab, Mochila *mochila, Pilha *caminho,
     Posicao pos = {linha, coluna};
     pilha_empilhar(caminho, pos);
 
-    /* visualizacao */
-    labirinto_imprimir(lab, mochila->quantidade, mochila->total);
-    if (delay_ms > 0) dormir(delay_ms);
+    /* visualizacao animada */
+    if (delay_ms > 0) {
+        system("cls");
+        labirinto_imprimir(lab, mochila->quantidade, mochila->total);
+        Sleep(delay_ms);
+    }
 
     /* --- explora as 4 direcoes --- */
     for (int d = 0; d < 4; d++) {

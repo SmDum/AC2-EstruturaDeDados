@@ -37,7 +37,4 @@ int pilha_empilhar(Pilha *p, Posicao pos);
 /* desempilha e retorna a posicao do topo */
 Posicao pilha_desempilhar(Pilha *p);
 
-/* apenas consulta o topo sem remover */
-Posicao pilha_topo(Pilha *p);
-
 #endif

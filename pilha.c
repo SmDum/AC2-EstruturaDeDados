@@ -52,11 +52,3 @@ Posicao pilha_desempilhar(Pilha *p) {
     return pos;
 }
 
-/* retorna o topo sem modificar a pilha */
-Posicao pilha_topo(Pilha *p) {
-    Posicao pos = {-1, -1};
-    if (!pilha_vazia(p)) {
-        pos = p->dados[p->topo];
-    }
-    return pos;
-}
