@@ -124,7 +124,7 @@ Tamanho do caminho: 42 passos
 
 ## 👨‍💻 Autor
 
-Desenvolvido por **SmDum** como atividade avaliativa (AC2) da disciplina de Estrutura de Dados.
+Desenvolvido por **Giovanni de Luca Gomieri, Guilherme Alves dos Santos, Matheus Cravo Purcena Gonçalves e Samuel de Moraes Delgado** como atividade avaliativa (AC2) da disciplina de Estrutura de Dados.
 
 ---
 
