@@ -1,4 +1,4 @@
-Giovanni de Luca Gomieri        | R.A: 248662
-Guilherme Alves dos Santos      | R.A: 247843
-Matheus Cravo Purcena Gonçalves | R.A: 248431
-Samuel de Moraes Delgado        | R.A: 248729
+Giovanni de Luca Gomieri        | R.A.: 248662
+Guilherme Alves dos Santos      | R.A.: 247843
+Matheus Cravo Purcena Gonçalves | R.A.: 248431
+Samuel de Moraes Delgado        | R.A.: 248729

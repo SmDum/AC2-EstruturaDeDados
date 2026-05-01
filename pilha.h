@@ -11,13 +11,15 @@
 #define MAX_PILHA 2000
 
 /* representa uma posicao no labirinto */
-typedef struct {
+typedef struct 
+{
     int linha;
     int coluna;
 } Posicao;
 
 /* estrutura da pilha usando array estatico */
-typedef struct {
+typedef struct 
+{
     Posicao dados[MAX_PILHA];
     int topo;
 } Pilha;
@@ -36,8 +38,5 @@ int pilha_empilhar(Pilha *p, Posicao pos);
 
 /* desempilha e retorna a posicao do topo */
 Posicao pilha_desempilhar(Pilha *p);
-
-/* apenas consulta o topo sem remover */
-Posicao pilha_topo(Pilha *p);
 
 #endif
