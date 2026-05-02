@@ -10,13 +10,15 @@
 #define MOCHILA_H
 
 /* no da lista encadeada representando um tesouro */
-typedef struct NoTesouro {
+typedef struct NoTesouro 
+{
     int valor;                  /* valor em moedas (1 a 100) */
     struct NoTesouro *proximo;  /* ponteiro para o proximo no */
 } NoTesouro;
 
 /* a mochila em si: ponteiro para o inicio da lista e total acumulado */
-typedef struct {
+typedef struct 
+{
     NoTesouro *inicio;  /* sempre aponta para o tesouro de menor valor */
     int total;          /* soma de todos os valores na mochila */
     int quantidade;     /* numero de tesouros */

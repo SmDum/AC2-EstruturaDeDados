@@ -32,7 +32,8 @@
 #include "mochila.h"
 #include "pilha.h"
 
-void dormir(int ms) {
+void dormir(int ms) 
+{
     clock_t inicio = clock();
     while ((clock() - inicio) < (ms * CLOCKS_PER_SEC / 1000));
 }
@@ -40,7 +41,8 @@ void dormir(int ms) {
 static int direcao_linha[4]  = {-1,  1,  0,  0};
 static int direcao_coluna[4] = { 0,  0, -1,  1};
 
-static int pode_mover(Labirinto *lab, int linha, int col) {
+static int pode_mover(Labirinto *lab, int linha, int col) 
+{
     if (linha < 0 || linha >= lab->linhas) return 0;
     if (col   < 0 || col   >= lab->colunas) return 0;
     char c = labirinto_get(lab, linha, col);
@@ -51,7 +53,8 @@ static int pode_mover(Labirinto *lab, int linha, int col) {
  * copia profunda da lista encadeada da mochila.
  * necessario para salvar um snapshot independente ao encontrar a saida.
  */
-static void mochila_copiar(Mochila *dest, Mochila *orig) {
+static void mochila_copiar(Mochila *dest, Mochila *orig) 
+{
     mochila_liberar(dest);
     dest->total      = orig->total;
     dest->quantidade = orig->quantidade;
@@ -70,17 +73,17 @@ static void mochila_copiar(Mochila *dest, Mochila *orig) {
     }
 }
 
-void busca_backtracking(Labirinto *lab, Mochila *mochila, Pilha *caminho,
-                        int linha, int coluna, int delay_ms,
-                        ResultadoBusca *melhor) {
-
+void busca_backtracking(Labirinto *lab, Mochila *mochila, Pilha *caminho, int linha, int coluna, int delay_ms, ResultadoBusca *melhor) 
+{
     /* --- CASO BASE: chegamos na saida --- */
-    if (linha == lab->saida_linha && coluna == lab->saida_coluna) {
+    if (linha == lab->saida_linha && coluna == lab->saida_coluna) 
+    {
         Posicao pos = {linha, coluna};
         pilha_empilhar(caminho, pos);
 
         /* atualiza o melhor se este caminho tem mais moedas */
-        if (!melhor->encontrou || mochila->total > melhor->mochila.total) {
+        if (!melhor->encontrou || mochila->total > melhor->mochila.total) 
+        {
             melhor->encontrou = 1;
             melhor->caminho   = *caminho;          /* copia da pilha (array estatico) */
             mochila_copiar(&melhor->mochila, mochila);
@@ -106,7 +109,8 @@ void busca_backtracking(Labirinto *lab, Mochila *mochila, Pilha *caminho,
     if (delay_ms > 0) dormir(delay_ms);
 
     /* --- explora as 4 direcoes --- */
-    for (int d = 0; d < 4; d++) {
+    for (int d = 0; d < 4; d++) 
+    {
         int nl = linha  + direcao_linha[d];
         int nc = coluna + direcao_coluna[d];
 
@@ -117,14 +121,16 @@ void busca_backtracking(Labirinto *lab, Mochila *mochila, Pilha *caminho,
         int valor_perdido    = -1;
 
         /* coleta tesouro usando o valor FIXO armazenado no mapa */
-        if (celula_destino == TESOURO) {
+        if (celula_destino == TESOURO) 
+        {
             valor_adicionado = labirinto_get_valor(lab, nl, nc);
             mochila_inserir(mochila, valor_adicionado);
             printf("[TESOURO] Coletado! Valor fixo: %d moedas\n", valor_adicionado);
         }
 
         /* armadilha: perde o menor tesouro da mochila */
-        if (celula_destino == ARMADILHA) {
+        if (celula_destino == ARMADILHA) 
+        {
             valor_perdido = mochila_remover_primeiro(mochila);
             if (valor_perdido > 0)
                 printf("[ARMADILHA] Perdeu %d moedas!\n", valor_perdido);
@@ -143,7 +149,8 @@ void busca_backtracking(Labirinto *lab, Mochila *mochila, Pilha *caminho,
          * buscamos pelo valor exato e removemos apenas UM no (o primeiro
          * encontrado com aquele valor), depois paramos com 'break'.
          */
-        if (valor_adicionado > 0) {
+        if (valor_adicionado > 0) 
+        {
             NoTesouro *ant  = NULL;
             NoTesouro *cur  = mochila->inicio;
             while (cur != NULL) {
@@ -161,7 +168,8 @@ void busca_backtracking(Labirinto *lab, Mochila *mochila, Pilha *caminho,
         }
 
         /* reinsere o tesouro que a armadilha havia removido */
-        if (valor_perdido > 0) {
+        if (valor_perdido > 0) 
+        {
             mochila_inserir(mochila, valor_perdido);
         }
     }
@@ -171,11 +179,13 @@ void busca_backtracking(Labirinto *lab, Mochila *mochila, Pilha *caminho,
     pilha_desempilhar(caminho);
 }
 
-void busca_aplicar_melhor(Labirinto *lab, ResultadoBusca *melhor) {
+void busca_aplicar_melhor(Labirinto *lab, ResultadoBusca *melhor) 
+{
     if (!melhor->encontrou) return;
 
     Pilha *p = &melhor->caminho;
-    for (int i = 0; i <= p->topo; i++) {
+    for (int i = 0; i <= p->topo; i++) 
+    {
         int l = p->dados[i].linha;
         int c = p->dados[i].coluna;
         char cel = labirinto_get(lab, l, c);

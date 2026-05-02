@@ -16,20 +16,24 @@
 #define COR_VISITADO  "\033[34m"
 #define COR_CAMINHO   "\033[96m"
 
-int labirinto_carregar(Labirinto *lab, const char *caminho_arquivo) {
+int labirinto_carregar(Labirinto *lab, const char *caminho_arquivo) 
+{
     FILE *arquivo = fopen(caminho_arquivo, "r");
-    if (arquivo == NULL) {
+    if (arquivo == NULL) 
+    {
         printf("[ERRO] Arquivo '%s' nao encontrado!\n", caminho_arquivo);
         return 0;
     }
 
-    if (fscanf(arquivo, "%dx%d\n", &lab->linhas, &lab->colunas) != 2) {
+    if (fscanf(arquivo, "%dx%d\n", &lab->linhas, &lab->colunas) != 2) 
+    {
         printf("[ERRO] Formato invalido. A primeira linha deve ser 'LxC'.\n");
         fclose(arquivo);
         return 0;
     }
 
-    if (lab->linhas > MAX_LINHAS || lab->colunas > MAX_COLUNAS) {
+    if (lab->linhas > MAX_LINHAS || lab->colunas > MAX_COLUNAS)
+    {
         printf("[ERRO] Labirinto maior que o suportado (%dx%d).\n", MAX_LINHAS, MAX_COLUNAS);
         fclose(arquivo);
         return 0;
@@ -44,8 +48,10 @@ int labirinto_carregar(Labirinto *lab, const char *caminho_arquivo) {
     memset(lab->valores_tesouro, 0, sizeof(lab->valores_tesouro));
 
     char buffer[MAX_COLUNAS + 2];
-    for (int i = 0; i < lab->linhas; i++) {
-        if (fgets(buffer, sizeof(buffer), arquivo) == NULL) {
+    for (int i = 0; i < lab->linhas; i++) 
+    {
+        if (fgets(buffer, sizeof(buffer), arquivo) == NULL) 
+        {
             for (int j = 0; j < lab->colunas; j++)
                 labirinto_set(lab, i, j, PAREDE);
             continue;
@@ -62,41 +68,59 @@ int labirinto_carregar(Labirinto *lab, const char *caminho_arquivo) {
                 /* valor fixo gerado uma unica vez ao carregar o mapa */
                 lab->valores_tesouro[i * lab->colunas + j] = (rand() % 100) + 1;
             }
-            if (c == PERSONAGEM) { lab->inicio_linha = i; lab->inicio_coluna = j; }
-            else if (c == SAIDA) { lab->saida_linha  = i; lab->saida_coluna  = j; }
+            if (c == PERSONAGEM) 
+            { 
+                lab->inicio_linha = i; lab->inicio_coluna = j; 
+            }
+            else if (c == SAIDA) 
+            { 
+                lab->saida_linha  = i; lab->saida_coluna  = j; 
+            }
         }
     }
 
     fclose(arquivo);
 
-    if (lab->inicio_linha == -1) { printf("[ERRO] 'P' nao encontrado!\n"); return 0; }
-    if (lab->saida_linha  == -1) { printf("[ERRO] 'S' nao encontrado!\n"); return 0; }
+    if (lab->inicio_linha == -1) 
+    { 
+        printf("[ERRO] 'P' nao encontrado!\n"); return 0; 
+    }
+    if (lab->saida_linha  == -1)
+    { 
+        printf("[ERRO] 'S' nao encontrado!\n"); return 0;
+    }
 
     return 1;
 }
 
-char labirinto_get(Labirinto *lab, int linha, int col) {
+char labirinto_get(Labirinto *lab, int linha, int col) 
+{
     return lab->celulas[linha * lab->colunas + col];
 }
 
-void labirinto_set(Labirinto *lab, int linha, int col, char c) {
+void labirinto_set(Labirinto *lab, int linha, int col, char c) 
+{
     lab->celulas[linha * lab->colunas + col] = c;
 }
 
 /* retorna o valor fixo do tesouro naquela posicao (0 se nao for tesouro) */
-int labirinto_get_valor(Labirinto *lab, int linha, int col) {
+int labirinto_get_valor(Labirinto *lab, int linha, int col) 
+{
     return lab->valores_tesouro[linha * lab->colunas + col];
 }
 
-void labirinto_imprimir(Labirinto *lab, int tesouros, int total_moedas) {
+void labirinto_imprimir(Labirinto *lab, int tesouros, int total_moedas) 
+{
     system("cls");
 
     printf("<------------------------------------------------------------------------------------------------\n");
     printf("    LABIRINTO DE DADOS - AC2    \n");
     printf("------------------------------------------------------------------------------------------------>\n\n");
 
-    for (int i = 0; i < lab->linhas; i++) {
-        for (int j = 0; j < lab->colunas; j++) {
+    for (int i = 0; i < lab->linhas; i++) 
+    {
+        for (int j = 0; j < lab->colunas; j++) 
+        {
             char c = labirinto_get(lab, i, j);
             switch (c) {
                 case PAREDE:    printf(COR_PAREDE    "#" COR_RESET); break;
@@ -117,15 +141,18 @@ void labirinto_imprimir(Labirinto *lab, int tesouros, int total_moedas) {
     printf("Legenda: P=Personagem  T=Tesouro  A=Armadilha  S=Saida  .=Visitado  *=Caminho\n");
 }
 
-void labirinto_salvar_solucao(Labirinto *lab, const char *caminho_arquivo) {
+void labirinto_salvar_solucao(Labirinto *lab, const char *caminho_arquivo) 
+{
     FILE *arquivo = fopen(caminho_arquivo, "w");
-    if (arquivo == NULL) {
+    if (arquivo == NULL) 
+    {
         printf("[ERRO] Nao foi possivel criar '%s'!\n", caminho_arquivo);
         return;
     }
 
     fprintf(arquivo, "--- SOLUCAO DO LABIRINTO ---\n\n");
-    for (int i = 0; i < lab->linhas; i++) {
+    for (int i = 0; i < lab->linhas; i++) 
+    {
         for (int j = 0; j < lab->colunas; j++)
             fprintf(arquivo, "%c", labirinto_get(lab, i, j));
         fprintf(arquivo, "\n");

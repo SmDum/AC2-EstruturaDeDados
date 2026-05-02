@@ -33,7 +33,8 @@
  */
 #define DELAY_MS 0
 
-int main(void) {
+int main(void) 
+{
     /* inicializa o gerador de numeros aleatorios com a hora atual */
     srand((unsigned int)time(NULL));
 
@@ -41,15 +42,14 @@ int main(void) {
     /* 1. Carrega o labirinto                                            */
     /* ---------------------------------------------------------------- */
     Labirinto lab;
-    if (!labirinto_carregar(&lab, ARQUIVO_MAPA)) {
+    if (!labirinto_carregar(&lab, ARQUIVO_MAPA)) 
+    {
         printf("[FATAL] Nao foi possivel carregar o labirinto. Encerrando.\n");
         return 1;
     }
 
     printf("Labirinto carregado: %d linhas x %d colunas\n", lab.linhas, lab.colunas);
-    printf("Inicio: (%d, %d) | Saida: (%d, %d)\n",
-           lab.inicio_linha, lab.inicio_coluna,
-           lab.saida_linha,  lab.saida_coluna);
+    printf("Inicio: (%d, %d) | Saida: (%d, %d)\n", lab.inicio_linha, lab.inicio_coluna, lab.saida_linha,  lab.saida_coluna);
     printf("\nATENCAO: A busca explorara TODOS os caminhos possiveis\n");
     printf("para encontrar o que maximiza o numero de tesouros.\n");
     printf("Pressione ENTER para iniciar...\n");
@@ -75,12 +75,7 @@ int main(void) {
     /* ---------------------------------------------------------------- */
     printf("\n[BUSCA] Explorando todos os caminhos...\n\n");
 
-    busca_backtracking(
-        &lab, &mochila, &caminho,
-        lab.inicio_linha, lab.inicio_coluna,
-        DELAY_MS,
-        &melhor
-    );
+    busca_backtracking(&lab, &mochila, &caminho, lab.inicio_linha, lab.inicio_coluna, DELAY_MS, &melhor);
 
     /* ---------------------------------------------------------------- */
     /* 4. Aplica o melhor caminho no mapa e exibe resultado             */
@@ -88,7 +83,8 @@ int main(void) {
     printf("\n");
     printf("<------------------------------------------------------------------------------------------------\n");
 
-    if (melhor.encontrou) {
+    if (melhor.encontrou) 
+    {
         printf("        MISSAO CUMPRIDA! MELHOR CAMINHO ENCONTRADO!      \n");
         printf("------------------------------------------------------------------------------------------------>\n\n");
 

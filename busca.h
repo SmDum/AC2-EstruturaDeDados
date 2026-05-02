@@ -25,7 +25,8 @@
  * armazena o melhor resultado encontrado durante a busca completa
  * eh atualizado sempre que um novo caminho com mais moedas eh encontrado
  */
-typedef struct {
+typedef struct 
+{
     Pilha   caminho;    /* copia do caminho que levou ao melhor resultado */
     Mochila mochila;    /* copia da mochila no momento da melhor saida    */
     int     encontrou;  /* 1 se ao menos um caminho foi encontrado        */
