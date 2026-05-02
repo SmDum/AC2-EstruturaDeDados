@@ -7,8 +7,8 @@
 #ifndef PILHA_H
 #define PILHA_H
 
-/* tamanho maximo da pilha (40x40 = 1600 celulas, com folga) */
-#define MAX_PILHA 2000
+/* tamanho maximo da pilha (40x40 = 1600 celulas) */
+#define MAX_PILHA 1600
 
 /* representa uma posicao no labirinto */
 typedef struct {
