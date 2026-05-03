@@ -35,11 +35,11 @@ int pilha_empilhar(Pilha *p, Posicao pos)
     if (pilha_cheia(p)) 
     {
         printf("[ERRO] Pilha cheia! Caminho muito longo.\n");
-        return 0;
+        return 0; /*Falha*/
     }
-    p->topo++;
-    p->dados[p->topo] = pos;
-    return 1;
+    p->topo++; /*Avança o índice*/
+    p->dados[p->topo] = pos; /*Salva posição*/
+    return 1; /*Sucesso*/
 }
 
 /*
@@ -52,10 +52,10 @@ Posicao pilha_desempilhar(Pilha *p)
     if (pilha_vazia(p)) 
     {
         printf("[ERRO] Tentativa de desempilhar pilha vazia!\n");
-        return pos;
+        return pos; /*Inválido*/
     }
-    pos = p->dados[p->topo];
-    p->topo--;
+    pos = p->dados[p->topo]; /*Salva*/
+    p->topo--; /*Recua Índice*/
     return pos;
 }
 
